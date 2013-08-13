@@ -89,7 +89,7 @@ function _webform_display_link($component, $value, $format = 'html') {
 }
 
 /**
- * Custom theme function for collected link
+ * Custom theme function for collected link.
  */
 function theme_webform_display_link($variables) {
   $element = $variables['element'];
@@ -123,7 +123,7 @@ function _webform_csv_data_link($component, $export_options, $value) {
 }
 
 /**
- * Form validation handler
+ * Form validation handler.
  *
  * If a link was submitted, check that the URL is valid.
  */
