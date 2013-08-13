@@ -2,4 +2,4 @@ name = Webform Link
 description = Adds a component for links
 core = 7.x
 package = Webform
-dependencies[] = webform
+dependencies[] = webform (>=7.x-4.0-alpha6)
