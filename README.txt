@@ -10,7 +10,7 @@ webform
 
 Installation
 ------------
-1. Copy the entire module directory the Drupal sites/all/modules directory.
+1. Copy the webform_link directory to sites/all/modules.
 
 2. Login as administrator. Enable the module in the "Administer" -> "Modules"
 
