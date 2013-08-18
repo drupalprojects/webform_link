@@ -12,7 +12,7 @@ Installation
 ------------
 1. Copy the webform_link directory to sites/all/modules.
 
-2. Login as administrator. Enable the module in the "Administer" -> "Modules"
+2. Login as administrator. Enable the module in the "Administer" -> "Modules".
 
 3. Create a webform node at node/add/webform.
 
