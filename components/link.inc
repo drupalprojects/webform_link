@@ -45,7 +45,8 @@ function _webform_edit_link($component) {
 function _webform_theme_link() {
   return array(
     'webform_display_link' => array(
-      'render element' => 'element',
+      'arguments' => array('element' => NULL),
+      'file' => 'components/link.inc',
     ),
   );
 }
@@ -54,16 +55,18 @@ function _webform_theme_link() {
  * Implements _webform_render_component().
  */
 function _webform_render_link($component, $value = NULL, $filter = TRUE) {
+  $node = isset($component['nid']) ? node_load($component['nid']) : NULL;
+
   $element = array(
     '#type' => 'textfield',
     '#title' => $filter ? _webform_filter_xss($component['name']) : $component['name'],
     '#title_display' => $component['extra']['title_display'] ? $component['extra']['title_display'] : 'before',
-    '#default_value' => $component['value'],
+    '#default_value' => $filter ? _webform_filter_values($component['value'], $node, NULL, NULL, FALSE) : $component['value'],
     '#required' => $component['mandatory'],
     '#weight' => $component['weight'],
-    '#description' => $filter ? _webform_filter_xss($component['extra']['description']) : $component['extra']['description'],
-    '#translatable' => array('title', 'description'),
-    '#theme_wrappers' => array('webform_element'),
+    '#description' => $filter ? _webform_filter_descriptions($component['extra']['description'], $node) : $component['extra']['description'],
+    '#attributes' => $component['extra']['attributes'],
+    '#theme_wrappers' => array('webform_element_wrapper'),
     '#element_validate' => array('webform_link_validate'),
   );
   if (isset($value[0])) {
@@ -80,21 +83,19 @@ function _webform_display_link($component, $value, $format = 'html') {
     '#title' => $component['name'],
     '#weight' => $component['weight'],
     '#theme' => 'webform_display_link',
-    '#theme_wrappers' => $format == 'html' ? array('webform_element') : array('webform_element_text'),
+    '#theme_wrappers' => $format == 'html' ? array('webform_element', 'webform_element_wrapper') : array('webform_element_text'),
+    '#post_render' => array('webform_element_wrapper'),
     '#format' => $format,
-    '#value' => l($value[0], $value[0]),
-    '#translatable' => array('title'),
+    '#value' => isset($value[0]) ? $value[0] : '',
   );
   return $element;
 }
 
 /**
- * Custom theme function for collected link.
+ * Format the output of data for this component.
  */
-function theme_webform_display_link($variables) {
-  $element = $variables['element'];
-  $value = $element['#value'];
-  return $value;
+function theme_webform_display_link($element) {
+  return $element['#format'] == 'html' ? l($element['#value'], $element['#value']) : $element['#value'];
 }
 
 /**
