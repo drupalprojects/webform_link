@@ -15,7 +15,7 @@ function _webform_defaults_link() {
     'pid' => 0,
     'weight' => 0,
     'value' => '',
-    'mandatory' => 0,
+    'required' => 0,
     'extra' => array(
       'private' => FALSE,
       'description' => '',
@@ -59,7 +59,7 @@ function _webform_render_link($component, $value = NULL, $filter = TRUE) {
     '#title' => $filter ? _webform_filter_xss($component['name']) : $component['name'],
     '#title_display' => $component['extra']['title_display'] ? $component['extra']['title_display'] : 'before',
     '#default_value' => $component['value'],
-    '#required' => $component['mandatory'],
+    '#required' => $component['required'],
     '#weight' => $component['weight'],
     '#description' => $filter ? _webform_filter_xss($component['extra']['description']) : $component['extra']['description'],
     '#translatable' => array('title', 'description'),
